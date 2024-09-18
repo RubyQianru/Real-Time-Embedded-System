@@ -1,0 +1,62 @@
+Welcome to Real Time Embedded Systems!!
+
+-------------------------------------------------------------------
+Recitation 1. Environment Setup --> Visual Studio Code + PlatformIO
+-------------------------------------------------------------------
+
+Introduction --> What is Mbed OS?
+- https://os.mbed.com/mbed-os/
+- Cortex-M RTOS Kernel (Real Time Core)
+- Dev Tools 
+	- PlatfromIO IDE and CLI (We will be using this one in class)
+	- ARM Mbed Studio, Online Compiler, Mbed CLI (Alternate IDE)
+- IoT Connectivity
+- Integrated Security --> (TLS/SPM)
+- Management Services/ Code Testing
+
+
+[1] Zoom SSO, Board and Cable Links:
+	- Board: 
+	- Mouser: https://www.mouser.com/ProductDetail/STMicroelectronics/STM32F429I-DISC1?qs=79dOc3%2F91%2Fed3%252BRc5JUCEw%3D%3D
+
+	- Digikey: https://www.digikey.com/en/products/detail/stmicroelectronics/STM32F429I-DISC1/5731713?utm_adgroup=&utm_source=google&utm_medium=cpc&utm_campaign=PMax%20Shopping_Product_Low%20ROAS%20Categories&utm_term=&utm_content=&utm_id=go_cmp-20243063506_adg-_ad-__dev-c_ext-_prd-5731713_sig-EAIaIQobChMItMb3qde7iAMVCHJHAR3WASn2EAQYASABEgJBrPD_BwE&gad_source=1&gclid=EAIaIQobChMItMb3qde7iAMVCHJHAR3WASn2EAQYASABEgJBrPD_BwE
+
+	- ST Product Overview (Latest version): https://www.st.com/en/evaluation-tools/32f429idiscovery.html
+	- Cable: https://www.amazon.com/dp/B00UUBS0SS?ref_=cm_sw_r_apin_dp_DXBGT8SRCRDJEWYJAQG6_1&th=1
+
+
+[2] Additional Academic Resources: Fast and Effective Embedded Systems Design: Applying the ARM mbed --> NYU Libraries --> available online for free
+
+
+[3] VSCode Installation: https://code.visualstudio.com/
+
+[4] Install ST Link USB Drivers (Only for Windows)(Use ANY of the 3 below):
+	- https://www.st.com/en/development-tools/stsw-link009.html (official page - full url)
+	- rb.gy/2njvp (official page)
+
+	- rb.gy/o4z9f (zip folder)
+		- run as admin --> stlink_winusb_install.bat
+
+
+[5] Install PlatformIO extension
+	--> Might get redirected to
+		- Install python3
+		- Install gcc or clang
+		- Flow: Source Code (.c/.cpp)--> Preprocessing --> Compilation (.S/Machine Code) --> Assembly (object file) --> Linking (.elf/.bin) --> Flashing/Upload (STLink)
+
+[6] Build a Sample Project
+[7] Starter Templates:
+		- Provided in the recitations Folder on Brightspace
+		- 2 versions given, check the How to Use the Templates folder!
+		- Try using both and check out their configuration files (platformio.ini)
+
+[8] Extras/Optional:
+	- Teleplot --> Install this VSCode extension
+	- PlatformIO Core --> PIO CLI
+		- Ensure that PlatformIO is properly installed and added to your system's PATH variables. Following commands will allow capturing the serial monitor data into an output file. This could be helpful if the data is to be analyzed later on:
+			- Install or check pio verion:
+				- pio upgrade
+				- pio --version
+			- Access the serial monitor --> pio device monitor
+			- Capture in an Output file --> pio device monitor --baud 9600 > output.txt
+			- Appending --> pio device monitor --baud 9600 >> output.txt 
