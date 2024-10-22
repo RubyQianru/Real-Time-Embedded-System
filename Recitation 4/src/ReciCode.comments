@@ -1,0 +1,288 @@
+// Example 1 (a) -->> DigitalOuts..
+
+// int main(){
+
+//     // put your setup code here, to run once:
+//     // Declarations
+//     DigitalOut led(LED1); // equivalent to led(PG_13)
+//     DigitalOut led(LED1, 0); // equivalent to led(PG_13, 0)
+//     DigitalOut led(LED1, 0), led2(LED2, 1); // equivalent to led(PG_13, 0), led2(PG_14, 1)
+
+//     // ways to initialize/write to leds
+//         // led.write(1);
+//         // led = 1;
+
+    
+
+// //Blinky --> Blinking leds on the board --> different ways
+//     while(1){
+//         // put your main code here, to run repeatedly:
+//         led = 1;
+//         thread_sleep_for(500);
+//         led = 0;
+//         thread_sleep_for(500);
+//     }
+//     // while(1){
+//     //     // put your main code here, to run repeatedly:
+//     //     led = !led;
+//     //     thread_sleep_for(500);
+//     // }
+//     // while(1){
+//     //     // put your main code here, to run repeatedly:
+//     //     led = !led;
+//     //     led2 = !led2;
+//     //     thread_sleep_for(500);
+//     // }
+// }
+
+
+// // Example 1 (b)
+// // 2-bit led counter
+// // Define a BusOut for 2 LEDs
+// BusOut myleds(LED1, LED2);  // Only 2 LEDs (2-bit counter)
+
+// int main() {
+//     while (1) {
+//         for (int i = 0; i < 4; i++) {               // 2-bit counter (0 to 3)
+//             myleds = i;                             // Set the LEDs to the binary value of i
+//             thread_sleep_for(250);                  // 250ms delay
+//         }
+//     }
+// }
+
+// // Example 2 (a) -->> Analog IO
+// // Define an AnalogIn object for reading from an analog input pin
+// AnalogIn ain(PA_0);  // Use pin PA_0 (User Button) for analog input
+
+// int main() {
+//     while (1) {
+//         // Read the analog input value (range is 0.0 to 1.0)
+//         float analogValue = ain.read();
+
+//         // Print the analog value to the serial monitor
+//         printf("Analog Input: %f\n", analogValue);
+
+//         // Small delay to avoid spamming the output
+//         thread_sleep_for(500);  // Sleep for 500ms
+//     }
+// }
+
+// // Example 2 (a) Analog and Digital Reads -->> Same Stuff with a different intro code...
+// int main(){
+
+//     // put your setup code here, to run once:
+    
+//     float a = 0, b = 0, c = 0;
+
+//     // DigitalIn in1(PA_0); 
+//     // DigitalIn in2(PA_2, PullUp); // What does pull up and pull down mean? For default value: pull up to the reference value(1)
+//     // DigitalIn in3(PA_4, PullDown); 
+
+//     AnalogIn in1(BUTTON1);
+//     AnalogIn in2(PA_2);
+//     AnalogIn in3(PA_4);
+
+//     a = in1.read();
+//     b = in2.read();
+//     c = in3.read();
+
+
+//     while(1){
+//         // put your main code here, to run repeatedly:
+        
+//         // printf("%ld \n ", a); // Digital Reads
+//         // printf("%ld \n ", b);
+//         // printf("%ld \n ", c);
+
+//         a = in1.read();
+//         b = in2.read();
+//         c = in3.read();
+
+//         // printf("%.2f \n ", a); // Analog Read Floats. 
+//         // printf("%.2f \n ", b);
+//         printf("%.2f \n ", c);
+//         thread_sleep_for(500);
+//     }
+// }
+
+// // Example 2 (b) -->> SAWTOOTH Wave Generation
+// // Define Analog Output pin
+// AnalogOut signal(PA_5);  // Replace with your specific pin
+
+// int main() {
+//     while (1) {
+//         // Generate Sawtooth Wave
+//         for (float i = 0.0; i < 1.0; i += 0.01) {
+//             signal = i;  // Write value to analog out
+//             printf(">SAWTOOTH Wave: %f\n", i);  // Output to Teleplot
+//             thread_sleep_for(100);  // 0.1 ms delay
+//         }
+//     }
+// }
+
+
+// // Example 2 (c) -->> Triangle Wave Generation
+// // Define Analog Output pin
+// AnalogOut signal(PA_5);  // Replace with your specific pin
+
+// int main() {
+//     while (1) {
+//         // Generate Triangular Wave
+//         for (float i = 0.0; i < 1.0; i += 0.01) {
+//             signal = i;  // Write value to analog out
+//             printf(">TRIANGLE Wave: %f\n", i);  // Output to Teleplot
+//             thread_sleep_for(100);  // 0.1 ms delay
+//         }
+
+//         for (float i = 1.0; i > 0.0; i -= 0.01) {
+//             signal = i;  // Write value to analog out
+//             printf(">TRIANGLE Wave: %f\n", i);  // Output to Teleplot
+//             thread_sleep_for(100);  // 0.1 ms delay
+//         }
+//     }
+// }
+
+
+// // Example -->> PWM WAVE GEN
+// // Define PWM Output pin
+// PwmOut pwm(PA_5);  // Choose an appropriate PWM-capable pin, e.g., PA_5
+
+// // Constants for waveform generation
+// const float TRIANGLE_STEP = 0.01f;  // Step for the triangle wave
+// const float PWM_PERIOD = 0.01f;     // 100Hz PWM period (10ms)
+
+// int main() {
+//     float triValue = 0.0f;
+//     bool increasing = true;
+
+//     // Set PWM period
+//     pwm.period(PWM_PERIOD);  // Set to 100Hz
+
+//     while (1) {
+//         // Triangular wave control for duty cycle modulation
+//         if (increasing) {
+//             triValue += TRIANGLE_STEP;
+//             if (triValue >= 1.0f) increasing = false;
+//         } else {
+//             triValue -= TRIANGLE_STEP;
+//             if (triValue <= 0.0f) increasing = true;
+//         }
+
+//         // Apply triangular wave to PWM duty cycle
+//         pwm.write(triValue);  // Duty cycle between 0 and 1 (0% to 100%)
+
+//         // Output for visualization in Teleplot
+//         printf(">PWM_DUTY: %f\n", triValue);
+
+//         // Adjust the update rate (sampling period)
+//         thread_sleep_for(10);  // Sleep for 10ms (~100Hz update rate)
+//     }
+// }
+
+// // Define a PwmOut object for controlling a PWM pin
+// PwmOut pwmOut(PA_5);  // Use an appropriate PWM-capable pin
+
+// // Constants for the PWM signal
+// const float PWM_PERIOD = 0.01f;  // 10ms period (100Hz PWM frequency)
+
+// int main() {
+//     pwmOut.period(PWM_PERIOD);  // Set the PWM period to 10ms (100Hz)
+
+//     while (true) {
+//         // Increase the duty cycle from 0% to 100%
+//         for (float dutyCycle = 0.0f; dutyCycle <= 1.0f; dutyCycle += 0.01f) {
+//             pwmOut.write(dutyCycle);  // Set the duty cycle
+
+//             // Print the duty cycle value for Teleplot visualization
+//             printf(">PWM_DUTY: %f\n", dutyCycle);
+
+//             thread_sleep_for(100);  // Wait for 100ms (adjust for slower/faster changes)
+//         }
+
+//         // Decrease the duty cycle from 100% back to 0%
+//         for (float dutyCycle = 1.0f; dutyCycle >= 0.0f; dutyCycle -= 0.01f) {
+//             pwmOut.write(dutyCycle);  // Set the duty cycle
+
+//             // Print the duty cycle value for Teleplot visualization
+//             printf(">PWM_DUTY: %f\n", dutyCycle);
+
+//             thread_sleep_for(100);  // Wait for 100ms
+//         }
+//     }
+// }
+
+
+// // Example 4 (a) -->> PWM 
+// // Define a PwmOut object for controlling a PWM pin
+// PwmOut pwmOut(PA_5);  // Use an appropriate PWM-capable pin
+
+// // Constants for the PWM signal
+// const float PWM_PERIOD = 0.01f;  // 10ms period (100Hz PWM frequency)
+
+// int main() {
+//     pwmOut.period(PWM_PERIOD);  // Set the PWM period to 10ms (100Hz)
+
+//     while (true) {
+//         // Increase the duty cycle from 0% to 100%
+//         for (float dutyCycle = 0.0f; dutyCycle <= 1.0f; dutyCycle += 0.01f) {
+//             pwmOut.write(dutyCycle);  // Set the duty cycle
+
+//             // Simulate a square wave visualization for Teleplot
+//             for (float t = 0; t < 1.0f; t += 0.01f) {  // Simulate over the period
+//                 if (t < dutyCycle) {
+//                     printf(">SQUARE_WAVE: 1.0\n");  // High state
+//                 } else {
+//                     printf(">SQUARE_WAVE: 0.0\n");  // Low state
+//                 }
+//                 thread_sleep_for(1);  // Simulate time steps (1ms per step)
+//             }
+
+//             thread_sleep_for(100);  // Wait for 100ms before next duty cycle change
+//         }
+
+//         // Decrease the duty cycle from 100% back to 0%
+//         for (float dutyCycle = 1.0f; dutyCycle >= 0.0f; dutyCycle -= 0.01f) {
+//             pwmOut.write(dutyCycle);  // Set the duty cycle
+
+//             // Simulate a square wave visualization for Teleplot
+//             for (float t = 0; t < 1.0f; t += 0.01f) {
+//                 if (t < dutyCycle) {
+//                     printf(">SQUARE_WAVE: 1.0\n");  // High state
+//                 } else {
+//                     printf(">SQUARE_WAVE: 0.0\n");  // Low state
+//                 }
+//                 thread_sleep_for(1);  // Simulate time steps (1ms per step)
+//             }
+
+//             thread_sleep_for(100);  // Wait for 100ms before next duty cycle change
+//         }
+//     }
+// }
+
+// Example 4 (b) -->> PWM different variants
+// #include <cmath>  // To use the sin() function
+
+// // Define a PwmOut object for controlling a PWM pin
+// PwmOut pwmOut(PA_5);  // Use an appropriate PWM-capable pin
+
+// // Constants for the PWM signal
+// const float PWM_PERIOD = 0.01f;  // 10ms period (100Hz PWM frequency)
+// const float PI = 3.14159;        // Value of Pi for the sine wave calculation
+
+// int main() {
+//     pwmOut.period(PWM_PERIOD);  // Set the PWM period to 10ms (100Hz)
+
+//     while (true) {
+//         // Generate the sinusoidal duty cycle (waveform modulating between 0 and 1)
+//         for (float t = 0.0f; t <= 2.0f * PI; t += 0.1f) {
+//             // Calculate the sinusoidal duty cycle between 0.0 and 1.0
+//             float dutyCycle = (sin(t) + 1.0f) / 2.0f;  // Shift sin wave to range [0, 1]
+//             pwmOut.write(dutyCycle);  // Set the duty cycle on PA_5
+
+//             // Output the sinusoidal duty cycle to Teleplot for visualization
+//             printf(">PWM_DUTY: %f\n", dutyCycle);
+
+//             thread_sleep_for(20);  // Adjust sleep for smooth transitions
+//         }
+//     }
+// }

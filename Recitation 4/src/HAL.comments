@@ -1,0 +1,53 @@
+Questions:
+1. What are HAL APIs?
+2. How to Read & Write to pins on the board?
+3. What's the difference between a Timer, Timeout and Ticker?
+
+
+The Hardware Abstraction Layer (HAL) APIs in Mbed OS are designed to provide a simple and consistent interface to the underlying hardware, making it easier for developers 
+to write portable code across different microcontroller platforms. These APIs abstract away the complexities of the hardware, allowing developers to interact with the hardware using high-level functions without needing to worry about the specific details of the underlying platform.
+
+The HAL APIs in Mbed OS cover various hardware functionalities, including:
+
+GPIO
+PWM
+Analog I/O
+Timers and Time
+Serial Communication
+Interrupts
+Sleep Modes
+USB
+Ethernet and Networking
+Storage
+
+
+
+In Mbed OS, `Timer`, `Timeout`, and `Ticker` are all timing utilities that serve different purposes. Understanding their distinctions is crucial for effective timing management in embedded applications.
+
+Timer
+
+- Use Case: A `Timer` is used to measure the amount of time that has elapsed. It's akin to a stopwatch and can be started, stopped, and reset.
+- Functionality: You can start a `Timer` to begin counting, stop it to pause the count, and read the elapsed time at any point. This allows you to measure the duration of operations or code execution.
+- Typical Applications: Measuring execution time, profiling, or timing operations that require manual control over start and stop.
+
+Timeout
+
+- Use Case: A `Timeout` is used to execute a function once after a specified delay. It's like setting an alarm that goes off once after a set amount of time.
+- Functionality: You set a `Timeout` with a specific time interval and a callback function. When the time expires, the callback function is executed once.
+- Typical Applications: Delayed single execution of tasks, such as triggering an event or changing the state of a system after a specific time.
+
+Ticker
+
+- Use Case: A `Ticker` is used to repeatedly call a function at constant intervals. It's like setting a repeating alarm that goes off at regular intervals.
+- Functionality: You attach a callback function to a `Ticker` and specify the interval. The `Ticker` then calls the attached function repeatedly at the defined intervals.
+- Typical Applications: Regularly sampling a sensor, updating a display, or any task that needs to be performed at regular intervals.
+
+Key Differences
+
+- Repetition: `Timer` is for one-off time measurements and doesn't call functions. `Timeout` triggers a callback once after a delay. `Ticker` repeatedly triggers a callback at regular intervals.
+- Use Case: Choose `Timer` for measuring time, `Timeout` for executing a task after a delay, and `Ticker` for periodic task execution.
+- Control: `Timer` offers manual control (start/stop), while `Timeout` and `Ticker` are more set-and-forget but with callback functionality.
+
+Each of these utilities serves a unique purpose in time management within an embedded system, and choosing the right one depends on the specific requirements of your application.
+
+
